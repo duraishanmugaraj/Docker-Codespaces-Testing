@@ -1,7 +1,7 @@
 {
   "name": "GitHub Codespaces - Ubuntu with AWS CLI",
   "image": "mcr.microsoft.com/devcontainers/universal:2",
-  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y awscli",
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y awscli && pip install snowflake-connector-python python-dotenv && docker pull apache/spark:latest",
   "customizations": {
     "vscode": {
       "extensions": [
