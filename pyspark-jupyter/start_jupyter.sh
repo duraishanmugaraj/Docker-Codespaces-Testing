@@ -1,0 +1,1 @@
+docker exec -it -u root spark-master jupyter notebook --ip='*'  --port=8888 --no-browser --allow-root
