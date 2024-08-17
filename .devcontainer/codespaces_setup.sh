@@ -24,4 +24,10 @@ airflow users create \
     --role Admin \
     --email admin@example.com || { echo "Failed to create Airflow admin user"; }
 
+# Start Airflow webserver in the background and redirect output to log file
+airflow webserver --port 8080 >> /tmp/codespaces_setup.log 2>&1 &
+
+# Start Airflow scheduler in the background and redirect output to log file
+airflow scheduler >> /tmp/codespaces_setup.log 2>&1 &
+
 echo "Setup completed successfully"
