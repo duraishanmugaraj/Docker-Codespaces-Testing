@@ -3,9 +3,6 @@
 # Change directory to the repository
 cd /workspaces/$RepositoryName || { echo "Failed to change directory to /workspaces/$RepositoryName"; }
 
-# Update package lists
-sudo apt-get update || { echo "Failed to update package lists"; }
-
 # Determine Python version for Airflow constraints
 python_version=$(python --version 2>&1 | cut -d ' ' -f 2 | cut -d '.' -f 1-2) || { echo "Failed to get Python version"; }
 

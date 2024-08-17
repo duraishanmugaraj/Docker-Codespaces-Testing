@@ -1,0 +1,25 @@
+{
+  "name": "GitHub Codespaces",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "postCreateCommand": "sh .devcontainer/codespaces_setup.sh > /tmp/codespaces_setup.log 2>&1",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "amazonwebservices.aws-toolkit-vscode",
+        "ms-azuretools.vscode-docker",
+        "ms-python.python",
+        "ms-python.black-formatter",
+        "ms-toolsai.jupyter",
+        "akamud.vscode-theme-onedark",
+        "github.codespaces",
+        "ms-vscode-remote.remote-containers"
+      ],
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+      }
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/aws-cli:1": {}
+  }
+}

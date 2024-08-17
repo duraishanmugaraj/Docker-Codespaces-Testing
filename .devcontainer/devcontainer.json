@@ -1,6 +1,6 @@
 {
   "name": "GitHub Codespaces",
-  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "image": "mcr.microsoft.com/devcontainers/python:3.8-bullseye",
   "postCreateCommand": "sh .devcontainer/codespaces_setup.sh > /tmp/codespaces_setup.log 2>&1",
   "customizations": {
     "vscode": {
