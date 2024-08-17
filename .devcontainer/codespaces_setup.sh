@@ -3,11 +3,11 @@
 # Change directory to the repository
 cd /workspaces/$RepositoryName || { echo "Failed to change directory to /workspaces/$RepositoryName"; }
 
-# Update package lists
-sudo apt-get update || { echo "Failed to update package lists"; }
-
 # Pull the Docker image
 docker pull docker.io/apache/spark:3.5.2-scala2.12-java11-python3-r-ubuntu || { echo "Failed to pull Docker image"; }
+
+# Update package lists
+sudo apt-get update || { echo "Failed to update package lists"; }
 
 # Start Docker containers in detached mode
 docker-compose up -d || { echo "Failed to start Docker containers"; }
@@ -36,8 +36,8 @@ airflow users create \
     --email admin@example.com || { echo "Failed to create Airflow admin user"; }
 
 # Start Airflow webserver and scheduler
-airflow webserver --port 8080 & || { echo "Failed to start Airflow webserver"; }
-airflow scheduler & || { echo "Failed to start Airflow scheduler"; }
+airflow webserver --port 8080 &
+airflow scheduler &
 
 # Start Jupyter notebook server inside the spark-master container
 docker exec -it -u root spark-master bash -c "nohup jupyter notebook --ip='*' --port=8888 --no-browser --allow-root > /tmp/jupyter.log 2>&1 &" || { echo "Failed to start Jupyter notebook server"; }
