@@ -1,12 +1,15 @@
 {
-  "name": "Spark and Jupyter Notebook",
-  "dockerComposeFile": "docker-compose.yml",
-  "service": "spark-master",
+  "name": "Spark Jupyter Dev Container",
+  "dockerFile": "Dockerfile",
+  "context": ".",
   "workspaceFolder": "/workspace",
+  "postCreateCommand": "pip install -r /workspace/requirements.txt",
   "customizations": {
     "vscode": {
       "settings": {
-        "terminal.integrated.shell.linux": "/bin/bash"
+        "python.pythonPath": "/usr/bin/python3",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true
       },
       "extensions": [
         "ms-python.python",
@@ -14,6 +17,11 @@
       ]
     }
   },
-  "postCreateCommand": "pip install -r requirements.txt",
-  "remoteUser": "vscode"
+  "forwardPorts": [
+    8888
+  ],
+  "remoteUser": "root",
+  "runArgs": [
+    "--shm-size=2g"
+  ]
 }
