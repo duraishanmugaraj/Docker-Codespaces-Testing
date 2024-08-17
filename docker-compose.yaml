@@ -10,10 +10,11 @@ services:
       - SPARK_HISTORY_OPTS=-Dspark.history.fs.logDirectory=/opt/spark/logs
       - SPARK_EVENTLOG_ENABLED=true
       - SPARK_EVENTLOG_DIR=/opt/spark/logs
-    command: ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.master.Master"]
+    command: ["sh", "/opt/spark/start_services.sh"]
     ports:
       - "4040:4040"   # Spark Master Web UI port
       - "7077:7077"   # Spark Master port
+      - "8888:8888"   # Jupyter 
     volumes:
       - ./pyspark-jupyter/data:/data
       - spark-logs:/opt/spark/logs
@@ -21,9 +22,10 @@ services:
       - spark-network
 
   spark-worker-1:
-    build: .
+    image: docker.io/apache/spark:3.5.2-scala2.12-java11-python3-r-ubuntu
     container_name: spark-worker-1
     hostname: worker-1
+    user: root
     environment:
       - SPARK_MASTER_URL=spark://master:7077
     command: ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://master:7077"]
@@ -37,9 +39,10 @@ services:
       - spark-network
 
   spark-worker-2:
-    build: .
+    image: docker.io/apache/spark:3.5.2-scala2.12-java11-python3-r-ubuntu
     container_name: spark-worker-2
     hostname: worker-2
+    user: root
     environment:
       - SPARK_MASTER_URL=spark://master:7077
     command: ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://master:7077"]
@@ -53,9 +56,10 @@ services:
       - spark-network
 
   spark-history-server:
-    build: .
+    image: docker.io/apache/spark:3.5.2-scala2.12-java11-python3-r-ubuntu
     container_name: spark-history-server
     hostname: history-server
+    user: root
     environment:
       - SPARK_HISTORY_OPTS=-Dspark.history.fs.logDirectory=/opt/spark/logs
     command: ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.history.HistoryServer"]
@@ -67,20 +71,6 @@ services:
       - spark-master
     networks:
       - spark-network
-
-  jupyter:
-    build: .
-    container_name: jupyter
-    ports:
-      - "8888:8888"
-    volumes:
-      - ./pyspark-jupyter/data:/data
-      - spark-logs:/opt/spark/logs
-    networks:
-      - spark-network
-    command: jupyter notebook --ip='*' --port=8888 --no-browser --allow-root
-    stdin_open: true
-    tty: true
 
 networks:
   spark-network:

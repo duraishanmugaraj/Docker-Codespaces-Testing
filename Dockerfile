@@ -12,3 +12,4 @@ RUN apt-get update && \
     mkdir /opt/spark/conf/
 
 COPY spark-defaults.conf /opt/spark/conf/spark-defaults.conf
+COPY start_services.sh /opt/spark/start_services.sh
