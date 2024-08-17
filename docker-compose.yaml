@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   spark-master:
-    image: docker.io/apache/spark:3.5.2-scala2.12-java11-python3-r-ubuntu
+    build: .
     container_name: spark-master
     hostname: master
     environment:
@@ -14,7 +14,6 @@ services:
     ports:
       - "4040:4040"   # Spark Master Web UI port
       - "7077:7077"   # Spark Master port
-      - "8888:8888"   # Jupyter notebook
     volumes:
       - ./pyspark-jupyter/data:/data
       - spark-logs:/opt/spark/logs
@@ -22,7 +21,7 @@ services:
       - spark-network
 
   spark-worker-1:
-    image: docker.io/apache/spark:3.5.2-scala2.12-java11-python3-r-ubuntu
+    build: .
     container_name: spark-worker-1
     hostname: worker-1
     environment:
@@ -38,7 +37,7 @@ services:
       - spark-network
 
   spark-worker-2:
-    image: docker.io/apache/spark:3.5.2-scala2.12-java11-python3-r-ubuntu
+    build: .
     container_name: spark-worker-2
     hostname: worker-2
     environment:
@@ -54,7 +53,7 @@ services:
       - spark-network
 
   spark-history-server:
-    image: docker.io/apache/spark:3.5.2-scala2.12-java11-python3-r-ubuntu
+    build: .
     container_name: spark-history-server
     hostname: history-server
     environment:
@@ -68,6 +67,19 @@ services:
       - spark-master
     networks:
       - spark-network
+
+  jupyter:
+    build: .
+    container_name: jupyter
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./pyspark-jupyter/data:/data
+    networks:
+      - spark-network
+    command: jupyter notebook --ip='*' --port=8888 --no-browser --allow-root
+    stdin_open: true
+    tty: true
 
 networks:
   spark-network:
