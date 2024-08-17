@@ -1,5 +1,6 @@
+cd /workspaces/$RepositoryName
+
 sudo apt-get update
-sudo apt-get install -y awscli
 
 docker pull docker.io/apache/spark:3.5.2-scala2.12-java11-python3-r-ubuntu
 docker-compose up -d
@@ -9,6 +10,7 @@ docker exec -it -u root spark-master bash -c "pip3 install --upgrade pip"
 docker exec -it -u root spark-master bash -c "pip3 install jupyter pyspark"
 
 python_version=$(python --version 2>&1 | cut -d ' ' -f 2 | cut -d '.' -f 1-2)
+pip install "apache-airflow==2.7.1" --constraint https://raw.githubusercontent.com/apache/airflow/constraints-2.7.1/constraints-${python_version}.txt
 
 airflow db init
 airflow users create \
