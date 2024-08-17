@@ -75,6 +75,7 @@ services:
       - "8888:8888"
     volumes:
       - ./pyspark-jupyter/data:/data
+      - spark-logs:/opt/spark/logs
     networks:
       - spark-network
     command: jupyter notebook --ip='*' --port=8888 --no-browser --allow-root
