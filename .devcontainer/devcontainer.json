@@ -1,7 +1,7 @@
 {
   "name": "GitHub Codespaces - Ubuntu with AWS CLI",
-  "image": "docker.io/apache/spark:3.5.2-scala2.12-java11-python3-r-ubuntu",
-  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y awscli && pip install snowflake-connector-python python-dotenv && docker pull apache/spark:latest",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y awscli && pip install snowflake-connector-python python-dotenv && docker pull docker.io/apache/spark:3.5.2-scala2.12-java11-python3-r-ubuntu",
   "customizations": {
     "vscode": {
       "extensions": [
