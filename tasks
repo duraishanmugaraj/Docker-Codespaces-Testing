@@ -1,0 +1,13 @@
+1. create aws lambda function -> 
+    upload to s3 .csv
+    run the lambda code :
+        create stage in snowflake 
+        push the data to temp table 
+        add load_date, tran_date, load_id and push to main table 
+        add info to audit table src count, tgt count 
+
+2. Dq
+
+3. Do some processing 
+
+4. push back to snowflake
